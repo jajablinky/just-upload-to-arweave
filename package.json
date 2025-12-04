@@ -1,0 +1,20 @@
+{
+  "name": "just-upload-to-arweave",
+  "version": "1.0.0",
+  "description": "Upload files and folders to Arweave",
+  "main": "upload-arweave.js",
+  "scripts": {
+    "start": "node upload-arweave.js"
+  },
+  "dependencies": {
+    "arweave": "^1.15.0"
+  },
+  "keywords": [
+    "arweave",
+    "upload",
+    "blockchain"
+  ],
+  "author": "",
+  "license": "ISC"
+}
+
