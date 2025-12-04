@@ -1,6 +1,6 @@
 # Just Upload to Arweave
 
-A simple Node.js script to upload files or entire folders to Arweave.
+Upload files or entire folders to Arweave.
 
 ## Features
 
@@ -56,6 +56,6 @@ The script auto-detects MIME types for:
 - Media: MP4, MP3
 - Archives: ZIP
 - Documents: PDF
-- And more (defaults to `application/octet-stream`)
+- And more
 
 
