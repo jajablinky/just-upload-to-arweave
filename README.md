@@ -58,3 +58,4 @@ The script auto-detects MIME types for:
 - Documents: PDF
 - And more (defaults to `application/octet-stream`)
 
+

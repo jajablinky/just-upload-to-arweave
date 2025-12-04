@@ -129,14 +129,32 @@ async function uploadToArweave() {
       // Upload via turbo upload endpoint
       const uploader = await arweave.transactions.getUploader(transaction);
       
+      // Track progress with a visual progress bar
+      const totalChunks = uploader.totalChunks || 1;
+      let uploadedChunks = 0;
+      
       // Use turbo endpoint for faster uploads
       while (!uploader.isComplete) {
         await uploader.uploadChunk();
-        const progress = uploader.totalChunks > 0 
-          ? ((uploader.paused ? uploader.lastChunkStart : uploader.chunkStart) / uploader.totalChunks * 100).toFixed(2)
-          : '100.00';
-        process.stdout.write(`\r  Progress: ${progress}%`);
+        
+        // Track chunks manually (increment after each chunk upload)
+        uploadedChunks++;
+        
+        // Calculate progress - ensure we don't exceed 100%
+        const progressPercent = totalChunks > 0 
+          ? Math.min(100, Math.round((uploadedChunks / totalChunks) * 100))
+          : Math.min(100, uploadedChunks > 0 ? 99 : 0);
+        
+        // Create visual progress bar
+        const barLength = 30;
+        const filledLength = Math.round((barLength * progressPercent) / 100);
+        const bar = '█'.repeat(filledLength) + '░'.repeat(barLength - filledLength);
+        
+        process.stdout.write(`\r  [${bar}] ${progressPercent}% (${uploadedChunks}/${totalChunks} chunks)`);
       }
+      
+      // Clear progress bar and show completion
+      process.stdout.write(`\r  [${'█'.repeat(30)}] 100% (${totalChunks}/${totalChunks} chunks)\n`);
       
       const txId = transaction.id;
       console.log(`\n✓ Successfully uploaded ${relativePath || fileName}`);
